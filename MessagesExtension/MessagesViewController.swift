@@ -9,26 +9,112 @@
 import UIKit
 import Messages
 
+struct Counter {
+    let counter: Int
+    
+    init () {
+        counter = 0
+    }
+    
+    init (n: Int) {
+        counter = n
+    }
+    
+    init? (url: URL) {
+        guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+            var queryItems = components.queryItems,
+            let counterStringValue = queryItems[0].value, // extract the counter value
+            counter = Int(counterStringValue)
+            else { return nil }
+        
+        self.counter = counter
+    }
+    
+    var url: URL {
+        var components = URLComponents(string: "http://example.com")!
+        let counter = URLQueryItem(name: "count", value: "\(self.counter)")
+        components.queryItems = [counter]
+        return components.url!
+    }
+    
+    func increase () -> Counter {
+        return Counter(n: counter+1)
+    }
+}
+
 class MessagesViewController: MSMessagesAppViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - Conversation Handling
+    
+    private var conversation: MSConversation? = nil
     
     override func willBecomeActive(with conversation: MSConversation) {
         // Called when the extension is about to move from the inactive to active state.
         // This will happen when the extension is about to present UI.
         
         // Use this method to configure the extension and restore previously stored state.
+        self.conversation = conversation
     }
+    
+    
+    
+    
+    @IBAction func createNewCounter(_ sender: AnyObject) {
+        guard let conversation = conversation else { return }
+        
+        // Create a new counter, the state is encoded in a URL
+        let ctr = Counter()
+        
+        // Create a message with a new session.
+        // With a shared session, messages can be
+        // updated rather than sending lots of new message
+        let session = MSSession()
+        let message = MSMessage(session: session)
+        message.url = ctr.url
+        
+        // Configure the message layout
+        let layout = MSMessageTemplateLayout()
+        layout.caption = "The Value is 0"
+        message.layout = layout
+        
+        // Insert the message into the conversation
+        conversation.insert(message, localizedChangeDescription: nil, completionHandler: { _ in
+            self.dismiss()
+        })
+    }
+    
+    
+    @IBAction func increaseSelectedCounter(_ sender: AnyObject) {
+        // Unpack all the optionals
+        guard let message = conversation?.selectedMessage, // get the currently selected message
+                  session = message.session, // we expect a shared session
+                  let url = message.url, // State is kept in the URL
+                  counter = Counter(url: url)
+            else { return }
+        
+
+        let newCounter = counter.increase()
+        
+        // Create a new message with the current session
+        let newMessage = MSMessage(session: session)
+        let layout = MSMessageTemplateLayout()
+        layout.image = nil
+        layout.caption = "The Value is \(newCounter.counter)"
+        newMessage.layout = layout
+        newMessage.url = newCounter.url
+        
+        // Insert the new message
+        conversation?.insert(newMessage, localizedChangeDescription: "increased counter to \(newCounter)", completionHandler: { (error) in
+            self.dismiss()
+        })
+    }
+    
+    
+
+    
+    
     
     override func didResignActive(with conversation: MSConversation) {
         // Called when the extension is about to move from the active to inactive state.

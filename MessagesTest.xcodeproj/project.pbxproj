@@ -159,14 +159,14 @@
 				TargetAttributes = {
 					9E761B911D124A8300DB4A59 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 5HD2ARTBFS;
-						DevelopmentTeamName = "Canva Pty Ltd";
+						DevelopmentTeam = NRB5UJQVWL;
+						DevelopmentTeamName = "Sebastian Grail (Personal Team)";
 						ProvisioningStyle = Automatic;
 					};
 					9E761B9B1D124A8400DB4A59 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 5HD2ARTBFS;
-						DevelopmentTeamName = "Canva Pty Ltd";
+						DevelopmentTeam = NRB5UJQVWL;
+						DevelopmentTeamName = "Sebastian Grail (Personal Team)";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -359,6 +359,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MessagesTest/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = de.grail.sebastian.MessagesTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -372,6 +373,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MessagesTest/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = de.grail.sebastian.MessagesTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -399,6 +401,7 @@
 				9E761BB01D124A8400DB4A59 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9E761BB21D124A8400DB4A59 /* Build configuration list for PBXNativeTarget "MessagesTest" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +410,7 @@
 				9E761BB41D124A8400DB4A59 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
