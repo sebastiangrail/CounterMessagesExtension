@@ -24,7 +24,7 @@ struct Counter {
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false),
             var queryItems = components.queryItems,
             let counterStringValue = queryItems[0].value, // extract the counter value
-            counter = Int(counterStringValue)
+            let counter = Int(counterStringValue)
             else { return nil }
         
         self.counter = counter
@@ -48,7 +48,7 @@ class MessagesViewController: MSMessagesAppViewController {
     
     // MARK: - Conversation Handling
     
-    private var conversation: MSConversation? = nil
+    fileprivate var conversation: MSConversation? = nil
     
     override func willBecomeActive(with conversation: MSConversation) {
         // Called when the extension is about to move from the inactive to active state.
@@ -80,18 +80,18 @@ class MessagesViewController: MSMessagesAppViewController {
         message.layout = layout
         
         // Insert the message into the conversation
-        conversation.insert(message, localizedChangeDescription: nil, completionHandler: { _ in
+        conversation.insert(message) { _ in
             self.dismiss()
-        })
+        }
     }
     
     
     @IBAction func increaseSelectedCounter(_ sender: AnyObject) {
         // Unpack all the optionals
         guard let message = conversation?.selectedMessage, // get the currently selected message
-                  session = message.session, // we expect a shared session
+                  let session = message.session, // we expect a shared session
                   let url = message.url, // State is kept in the URL
-                  counter = Counter(url: url)
+                  let counter = Counter(url: url)
             else { return }
         
 
@@ -106,7 +106,7 @@ class MessagesViewController: MSMessagesAppViewController {
         newMessage.url = newCounter.url
         
         // Insert the new message
-        conversation?.insert(newMessage, localizedChangeDescription: "increased counter to \(newCounter)", completionHandler: { (error) in
+        conversation?.insert(newMessage, completionHandler: { (error) in
             self.dismiss()
         })
     }

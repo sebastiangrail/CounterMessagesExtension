@@ -161,12 +161,14 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = NRB5UJQVWL;
 						DevelopmentTeamName = "Sebastian Grail (Personal Team)";
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					9E761B9B1D124A8400DB4A59 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = NRB5UJQVWL;
 						DevelopmentTeamName = "Sebastian Grail (Personal Team)";
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
